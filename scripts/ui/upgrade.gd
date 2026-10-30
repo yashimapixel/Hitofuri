@@ -39,7 +39,7 @@ func _row(u: UpgradeData) -> Control:
 		var cost := u.costs[lv]
 		b = UiUtil.button("%d\nコイン" % cost, _buy.bind(u))
 		b.disabled = SaveService.coins() < cost
-	b.custom_minimum_size = Vector2(80, 0)
+	b.custom_minimum_size = Vector2(88, 0)
 	h.add_child(b)
 	return panel
 

@@ -5,6 +5,7 @@ extends Control
 @onready var title_label: Label = %Title
 @onready var ad_button: Button = %AdButton
 @onready var take_button: Button = %TakeButton
+@onready var ad_note: Label = %AdNote
 
 var _total := 0
 var _done := false
@@ -24,7 +25,8 @@ func _ready() -> void:
 		_row(Text.RESULT_FIRST_CLEAR, str(r.first_clear_bonus), false)
 	_total = int(r.coins) + int(r.first_clear_bonus)
 	_row(Text.RESULT_COINS, str(_total), news.get("coins", false), &"TitleLabel")
-	ad_button.text = "%s（%d）" % [Text.AD_DOUBLE, _total * GameState.config.ad_reward_multiplier]
+	ad_button.text = Text.AD_DOUBLE
+	ad_note.text = Text.AD_DOUBLE_NOTE % [_total, _total * GameState.config.ad_reward_multiplier]
 	ad_button.pressed.connect(_on_ad)
 	take_button.pressed.connect(_finish.bind(1))
 	if _total <= 0:

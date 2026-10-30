@@ -34,8 +34,8 @@ func play_hurt() -> void:
 	_set_flash(0.0)
 	sprite.play(&"hurt")
 	var tw := create_tween()
-	tw.tween_property(self, "position:x", _base_x + 4, 0.04)
-	tw.tween_property(self, "position:x", _base_x - 4, 0.04)
+	tw.tween_property(self, "position:x", _base_x + 4 * scale.x, 0.04)
+	tw.tween_property(self, "position:x", _base_x - 4 * scale.x, 0.04)
 	tw.tween_property(self, "position:x", _base_x, 0.04)
 	tw.tween_callback(func() -> void:
 		if sprite.animation == &"hurt":
@@ -46,7 +46,7 @@ func play_defeated() -> void:
 	_flash_blink = false
 	_set_flash(1.0)
 	var tw := create_tween()
-	tw.tween_property(self, "scale", Vector2(1.3, 1.3), 0.3)
+	tw.tween_property(self, "scale", scale * 1.3, 0.3)
 	tw.parallel().tween_property(self, "modulate:a", 0.0, 0.3)
 	tw.tween_callback(queue_free)
 

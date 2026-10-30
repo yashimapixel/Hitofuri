@@ -3,8 +3,29 @@
 [ext_resource type="Script" path="res://scripts/ui/home.gd" id="1_s"]
 [ext_resource type="Texture2D" path="res://assets/bg/home.png" id="2_bg"]
 [ext_resource type="PackedScene" path="res://scenes/ui/top_bar.tscn" id="3_top"]
-[ext_resource type="PackedScene" path="res://scenes/parts/heroine.tscn" id="4_her"]
+[ext_resource type="Texture2D" path="res://assets/sprites/heroine_portrait.png" id="4_por"]
 [ext_resource type="Texture2D" path="res://assets/ui/badge.png" id="5_badge"]
+[ext_resource type="Texture2D" path="res://assets/ui/icon_mission.png" id="6_mis"]
+[ext_resource type="Texture2D" path="res://assets/ui/icon_upgrade.png" id="7_up"]
+[ext_resource type="Texture2D" path="res://assets/ui/icon_gacha.png" id="8_ga"]
+[ext_resource type="Texture2D" path="res://assets/ui/icon_equip.png" id="9_eq"]
+[ext_resource type="Texture2D" path="res://assets/ui/bubble_tail.png" id="10_tail"]
+
+[sub_resource type="StyleBoxFlat" id="bubble"]
+content_margin_left = 10.0
+content_margin_top = 8.0
+content_margin_right = 10.0
+content_margin_bottom = 8.0
+bg_color = Color(1, 1, 1, 1)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+border_color = Color(0.12, 0.08, 0.14, 1)
+corner_radius_top_left = 6
+corner_radius_top_right = 6
+corner_radius_bottom_right = 6
+corner_radius_bottom_left = 6
 
 [node name="Home" type="Control"]
 layout_mode = 3
@@ -24,86 +45,177 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="TopBar" parent="." instance=ExtResource("3_top")]
+[node name="Frame" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -180.0
+offset_right = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
-[node name="Heroine" parent="." instance=ExtResource("4_her")]
+[node name="TopBar" parent="Frame" instance=ExtResource("3_top")]
+layout_mode = 1
+anchor_right = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = 42.0
+show_settings = true
+
+[node name="MissionButton" type="Button" parent="Frame"]
 unique_name_in_owner = true
-position = Vector2(180, 330)
-scale = Vector2(3, 3)
+layout_mode = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -60.0
+offset_top = 50.0
+offset_right = -8.0
+offset_bottom = 102.0
+focus_mode = 0
+icon = ExtResource("6_mis")
+icon_alignment = 1
 
-[node name="Menu" type="VBoxContainer" parent="."]
-layout_mode = 0
-offset_left = 30.0
-offset_top = 432.0
-offset_right = 330.0
-offset_bottom = 628.0
-theme_override_constants/separation = 8
-
-[node name="SortieButton" type="Button" parent="Menu"]
+[node name="MissionBadge" type="TextureRect" parent="Frame/MissionButton"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 56)
+layout_mode = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -14.0
+offset_top = -6.0
+offset_right = 2.0
+offset_bottom = 10.0
+mouse_filter = 2
+texture = ExtResource("5_badge")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Stage" type="Control" parent="Frame"]
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 0.0
+offset_top = 44.0
+offset_right = 0.0
+offset_bottom = -178.0
+mouse_filter = 2
+
+[node name="Portrait" type="TextureRect" parent="Frame/Stage"]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -96.0
+offset_top = -336.0
+offset_right = 96.0
+offset_bottom = 0.0
+grow_vertical = 0
+texture = ExtResource("4_por")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="Bubble" type="PanelContainer" parent="Frame/Stage"]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -140.0
+offset_top = -400.0
+offset_right = 120.0
+offset_bottom = -344.0
+grow_vertical = 0
+mouse_filter = 2
+theme_override_styles/panel = SubResource("bubble")
+
+[node name="BubbleLabel" type="Label" parent="Frame/Stage/Bubble"]
+unique_name_in_owner = true
 layout_mode = 2
+theme_override_colors/font_color = Color(0.12, 0.08, 0.14, 1)
+theme_override_colors/font_shadow_color = Color(0, 0, 0, 0)
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[node name="Tail" type="TextureRect" parent="Frame/Stage"]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -104.0
+offset_top = -346.0
+offset_right = -80.0
+offset_bottom = -326.0
+grow_vertical = 0
+mouse_filter = 2
+texture = ExtResource("10_tail")
+expand_mode = 1
+stretch_mode = 0
+
+[node name="SortieButton" type="Button" parent="Frame"]
+unique_name_in_owner = true
+layout_mode = 1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 24.0
+offset_top = -172.0
+offset_right = -24.0
+offset_bottom = -108.0
+grow_vertical = 0
 focus_mode = 0
 theme_type_variation = &"AccentButton"
 text = "出撃"
 
-[node name="Row1" type="HBoxContainer" parent="Menu"]
-layout_mode = 2
-theme_override_constants/separation = 8
+[node name="Footer" type="HBoxContainer" parent="Frame"]
+layout_mode = 1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -100.0
+offset_right = -8.0
+offset_bottom = -6.0
+grow_vertical = 0
+theme_override_constants/separation = 6
 
-[node name="UpgradeButton" type="Button" parent="Menu/Row1"]
+[node name="UpgradeButton" type="Button" parent="Frame/Footer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 text = "強化"
+icon = ExtResource("7_up")
+icon_alignment = 1
+vertical_icon_alignment = 0
 
-[node name="GachaButton" type="Button" parent="Menu/Row1"]
+[node name="GachaButton" type="Button" parent="Frame/Footer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 text = "ガチャ"
+icon = ExtResource("8_ga")
+icon_alignment = 1
+vertical_icon_alignment = 0
 
-[node name="EquipButton" type="Button" parent="Menu/Row1"]
+[node name="EquipButton" type="Button" parent="Frame/Footer"]
 unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 40)
 layout_mode = 2
 size_flags_horizontal = 3
 focus_mode = 0
 text = "装備"
-
-[node name="Row2" type="HBoxContainer" parent="Menu"]
-layout_mode = 2
-theme_override_constants/separation = 8
-
-[node name="MissionButton" type="Button" parent="Menu/Row2"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-size_flags_horizontal = 3
-focus_mode = 0
-text = "ミッション"
-
-[node name="MissionBadge" type="TextureRect" parent="Menu/Row2/MissionButton"]
-unique_name_in_owner = true
-layout_mode = 0
-offset_left = 4.0
-offset_top = 4.0
-offset_right = 20.0
-offset_bottom = 20.0
-mouse_filter = 2
-texture = ExtResource("5_badge")
-expand_mode = 1
-stretch_mode = 5
-
-[node name="SettingsButton" type="Button" parent="Menu/Row2"]
-unique_name_in_owner = true
-custom_minimum_size = Vector2(0, 40)
-layout_mode = 2
-size_flags_horizontal = 3
-focus_mode = 0
-text = "設定"
+icon = ExtResource("9_eq")
+icon_alignment = 1
+vertical_icon_alignment = 0

@@ -1,27 +1,42 @@
 extends Control
-## Home 画面。出撃・強化・ガチャ・装備・ミッション・設定への入口。
-## その日の初回表示時にログインボーナス、エリア解放時にストーリーを出す。
+## Home 画面。立ち絵と吹き出しのセリフ、出撃・強化・ガチャ・装備・ミッション・設定への入口。
+## その日の初回表示時にログインボーナスを出す。
 
-const BADGE_TEX := preload("res://assets/ui/badge.png")
+## セリフを自動で切り替える間隔（秒）
+const LINE_INTERVAL := 7.0
 
-@onready var heroine: Heroine = %Heroine
+@onready var portrait: TextureRect = %Portrait
+@onready var bubble: PanelContainer = %Bubble
+@onready var bubble_label: Label = %BubbleLabel
+@onready var bubble_tail: TextureRect = %Tail
 @onready var mission_button: Button = %MissionButton
 @onready var mission_badge: TextureRect = %MissionBadge
 
+var _line_index := -1
+var _line_timer: Timer
+
 
 func _ready() -> void:
-	heroine.apply_costume(GameState.equipped_costume())
+	var costume := GameState.equipped_costume()
+	portrait.texture = costume.get_portrait()
+	portrait.material = costume.make_material()
+	portrait.gui_input.connect(_on_portrait_input)
 	%SortieButton.pressed.connect(_go.bind("area_select"))
 	%UpgradeButton.pressed.connect(_go.bind("upgrade"))
 	%GachaButton.pressed.connect(_go.bind("gacha"))
 	%EquipButton.pressed.connect(_go.bind("equip"))
-	%SettingsButton.pressed.connect(_go.bind("settings"))
 	mission_button.pressed.connect(_open_missions)
 	DailyService.check_new_day()
 	DailyService.missions_changed.connect(_refresh_badge)
 	DailyService.day_changed.connect(_on_day_changed)
 	AudioService.play_bgm("home")
 	_refresh_badge()
+	_line_timer = Timer.new()
+	_line_timer.wait_time = LINE_INTERVAL
+	_line_timer.timeout.connect(_next_line)
+	add_child(_line_timer)
+	_line_timer.start()
+	_next_line()
 	_show_startup_dialogs.call_deferred()
 
 
@@ -41,44 +56,40 @@ func _on_day_changed() -> void:
 
 
 func _show_startup_dialogs() -> void:
-	if GameState.pending_story == 0 and not 1 in _seen_stories():
-		GameState.pending_story = 1
-	if GameState.pending_story > 0:
-		await _show_story(GameState.pending_story)
-		GameState.pending_story = 0
 	if DailyService.has_pending_login_bonus():
 		await _show_login_bonus()
 
 
-func _seen_stories() -> Array[int]:
-	var out: Array[int] = []
-	for v: Variant in SaveService.data.story_seen:
-		out.append(int(v))
-	return out
+# ---------------------------------------------------------------- 吹き出し
 
-
-# ---------------------------------------------------------------- ストーリー
-
-func _show_story(index: int) -> void:
-	if index in _seen_stories() or not Text.STORY.has(index):
+func _next_line() -> void:
+	var lines: PackedStringArray = Text.HOME_LINES
+	if lines.is_empty():
+		bubble.hide()
+		bubble_tail.hide()
 		return
-	SaveService.data.story_seen.append(index)
-	SaveService.save_game()
-	var area := GameState.get_area(mini(index, GameState.area_count()))
-	var title := Text.ENDLESS if index > GameState.area_count() else area.display_name
-	var m := Modal.open(self, title)
-	var img := TextureRect.new()
-	img.texture = area.story_image if area.story_image != null else area.background
-	img.custom_minimum_size = Vector2(280, 150)
-	img.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
-	img.stretch_mode = TextureRect.STRETCH_KEEP_ASPECT_COVERED
-	img.clip_contents = true
-	m.content.add_child(img)
-	var text := UiUtil.label(Text.STORY[index])
-	text.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
-	m.content.add_child(text)
-	m.add_close_button(Text.OK)
-	await m.closed
+	var i := randi() % lines.size()
+	if lines.size() > 1 and i == _line_index:
+		i = (i + 1) % lines.size()
+	_line_index = i
+	bubble_label.text = lines[i]
+	bubble.pivot_offset = Vector2(bubble.size.x * 0.3, bubble.size.y)
+	bubble.scale = Vector2(0.85, 0.85)
+	var tw := create_tween()
+	tw.tween_property(bubble, "scale", Vector2.ONE, 0.12).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
+
+
+func _on_portrait_input(event: InputEvent) -> void:
+	var touch := event as InputEventScreenTouch
+	var mouse := event as InputEventMouseButton
+	if (touch != null and touch.pressed) or (mouse != null and mouse.pressed and mouse.button_index == MOUSE_BUTTON_LEFT):
+		AudioService.play_se("button")
+		_line_timer.start()
+		_next_line()
+		var tw := create_tween()
+		portrait.pivot_offset = Vector2(portrait.size.x / 2.0, portrait.size.y)
+		tw.tween_property(portrait, "scale", Vector2(1.0, 0.97), 0.06)
+		tw.tween_property(portrait, "scale", Vector2.ONE, 0.08)
 
 
 # ---------------------------------------------------------------- ログインボーナス
@@ -86,7 +97,7 @@ func _show_story(index: int) -> void:
 func _show_login_bonus() -> void:
 	var reward := DailyService.claim_login_bonus()
 	var total := DailyService.total_login_days()
-	var m := Modal.open(self, Text.LOGIN_BONUS)
+	var m := Modal.open(self, Text.LOGIN_BONUS, 340)
 	m.content.add_child(UiUtil.label(Text.LOGIN_DAY % total, &"", HORIZONTAL_ALIGNMENT_CENTER))
 	var grid := GridContainer.new()
 	grid.columns = 7
@@ -97,7 +108,7 @@ func _show_login_bonus() -> void:
 	for i in table.cycle_length():
 		var r := table.reward_for(cycle_start + i)
 		var cell := PanelContainer.new()
-		cell.custom_minimum_size = Vector2(38, 40)
+		cell.custom_minimum_size = Vector2(40, 44)
 		var v := VBoxContainer.new()
 		v.add_theme_constant_override("separation", 0)
 		cell.add_child(v)
@@ -145,7 +156,7 @@ func _reward_text(r: Dictionary) -> String:
 
 func _open_missions() -> void:
 	AudioService.play_se("button")
-	var m := Modal.open(self, Text.MISSION_TITLE, 320)
+	var m := Modal.open(self, Text.MISSION_TITLE, 340)
 	var list := VBoxContainer.new()
 	list.add_theme_constant_override("separation", 6)
 	m.content.add_child(list)

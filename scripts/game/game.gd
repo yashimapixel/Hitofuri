@@ -40,6 +40,10 @@ var cleared := false
 var coin_mul_total := 1.0
 
 var _ghost_alpha := 0.1
+## 画面に見えているワールド座標の範囲（下端を 640 に合わせ、縦長なら上に、横長なら左右に広がる）
+var _view_rect := Rect2(0, 0, 360, 640)
+## ステージ紹介を閉じて出現が始まったか
+var _started := false
 var _boss: Boss
 var _boss_bullet_frames: SpriteFrames
 var _hitstop_id := 0
@@ -63,16 +67,16 @@ var _coin_se_cooldown := 0.0
 @onready var spawner: Spawner = $Spawner
 @onready var boss_ctrl: BossController = $BossController
 @onready var hud: CanvasLayer = $HUD
-@onready var hearts: HBoxContainer = $HUD/Hearts
-@onready var floor_label: Label = $HUD/FloorLabel
-@onready var coin_icon: TextureRect = $HUD/CoinBox/CoinIcon
-@onready var coin_label: Label = $HUD/CoinBox/CoinLabel
-@onready var pause_button: Button = $HUD/PauseButton
-@onready var boss_bar: ProgressBar = $HUD/BossBar
-@onready var boss_name: Label = $HUD/BossBar/BossName
-@onready var banner: Label = $HUD/Banner
-@onready var judge_label: Label = $HUD/JudgeLabel
-@onready var combo_label: Label = $HUD/ComboLabel
+@onready var hearts: HFlowContainer = %Hearts
+@onready var floor_label: Label = %FloorLabel
+@onready var coin_icon: TextureRect = %CoinIcon
+@onready var coin_label: Label = %CoinLabel
+@onready var pause_button: Button = %PauseButton
+@onready var boss_bar: ProgressBar = %BossBar
+@onready var boss_name: Label = %BossName
+@onready var banner: Label = %Banner
+@onready var judge_label: Label = %JudgeLabel
+@onready var combo_label: Label = %ComboLabel
 @onready var pause_layer: CanvasLayer = $PauseLayer
 @onready var resume_button: Button = %ResumeButton
 @onready var retreat_button: Button = %RetreatButton
@@ -96,14 +100,16 @@ func _ready() -> void:
 	guards = int(GameState.upgrade_value(&"guard"))
 	coin_mul_total = (1.0 + GameState.upgrade_value(&"coin") / 100.0) * sword.coin_multiplier()
 
-	judge_line.position = Vector2(0, cfg.judge_line_y - 1)
 	heroine.position = cfg.heroine_position
+	heroine.scale = Vector2.ONE * cfg.heroine_scale
 	heroine.apply_costume(GameState.equipped_costume())
 	heroine.slash_fps = juice.heroine_slash_fps
 	slash_fx.position = Vector2(cfg.heroine_position.x, cfg.judge_line_y)
 	slash_fx.hide()
 	slash_fx.animation_finished.connect(slash_fx.hide)
 	background.setup(area.background, area.bg_scroll_speed)
+	get_viewport().size_changed.connect(_fit_view)
+	_fit_view()
 	judge_vis.visible = GameState.is_debug() and GameState.debug_show_judge
 	judge_vis.judge = judge
 	judge_vis.line_y = cfg.judge_line_y
@@ -126,9 +132,27 @@ func _ready() -> void:
 
 	DailyService.add_progress(MissionData.Stat.SORTIE, 1)
 	_update_hud()
-	spawner.start(area, endless)
 	AudioService.play_bgm("battle")
+	# そのステージに初めて入ったときだけ紹介を出す
+	var intro := StoryDialog.open_if_new(self, GameState.area_count() + 1 if endless else area_index)
+	if intro != null:
+		await intro.closed
+	_started = true
+	spawner.start(area, endless)
 	_show_banner(Text.ENDLESS if endless else area.display_name)
+
+
+## 画面サイズに合わせてカメラ・背景・判定ラインを配置する。
+## プレイフィールド（360×640）の下端を画面下端に合わせ、余った分は上と左右に広げる。
+func _fit_view() -> void:
+	var vs := get_viewport().get_visible_rect().size
+	var design := Vector2(360, 640)
+	_view_rect = Rect2(Vector2((design.x - vs.x) / 2.0, design.y - vs.y), vs)
+	camera.position = _view_rect.get_center()
+	background.cover(_view_rect)
+	judge_line.position = Vector2(_view_rect.position.x, cfg.judge_line_y - 1)
+	judge_line.size = Vector2(vs.x, 2)
+	judge_vis.x_range = Vector2(_view_rect.position.x, _view_rect.end.x)
 
 
 func _exit_tree() -> void:
@@ -190,19 +214,22 @@ func _on_spawn_requested(d: EnemyData, f: int) -> void:
 	var e := ENEMY_SCENE.instantiate() as Enemy
 	e.setup(d, _speed_for_floor(f) * d.speed_mul, f)
 	e.ghost_alpha = _ghost_alpha
-	e.position = Vector2(cfg.heroine_position.x, cfg.spawn_y)
+	e.scale = Vector2.ONE * cfg.enemy_scale
+	var x := cfg.heroine_position.x + roundf(rng.randf_range(-cfg.spawn_x_jitter, cfg.spawn_x_jitter))
+	e.position = Vector2(x, _view_rect.position.y + cfg.spawn_y * cfg.enemy_scale)
 	e.fire_requested.connect(_on_mage_fire)
 	field.add_child(e)
 
 
 func _on_mage_fire(mage: Enemy) -> void:
-	_spawn_projectile(mage.position + Vector2(0, 12), mage.speed * cfg.bullet_speed_mul, false, null)
+	_spawn_projectile(mage.position + Vector2(0, 12 * cfg.enemy_scale), mage.speed * cfg.bullet_speed_mul, false, null)
 
 
 func _spawn_projectile(pos: Vector2, spd: float, from_boss: bool, frames: SpriteFrames) -> void:
 	var p := PROJECTILE_SCENE.instantiate() as Projectile
 	p.setup(GameState.enemies[&"bullet"], spd, 0, frames)
 	p.from_boss = from_boss
+	p.scale = Vector2.ONE * cfg.enemy_scale
 	p.position = pos
 	field.add_child(p)
 
@@ -223,9 +250,10 @@ func _on_boss_requested(f: int, is_area_boss: bool) -> void:
 		boss_hp = cfg.midboss_hp_base + cfg.midboss_hp_per_area * hp_area
 	_boss = BOSS_SCENE.instantiate() as Boss
 	_boss.position = Vector2(cfg.heroine_position.x, cfg.boss_y)
+	_boss.scale = Vector2.ONE * cfg.boss_scale
 	boss_slot.add_child(_boss)
 	_boss.setup(bd.sprite_frames)
-	_boss.position.y = -40.0
+	_boss.position.y = _view_rect.position.y - 32.0 * cfg.boss_scale
 	create_tween().tween_property(_boss, "position:y", cfg.boss_y, 0.6).set_trans(Tween.TRANS_BACK).set_ease(Tween.EASE_OUT)
 	_boss_bullet_frames = bd.bullet_frames
 	boss_ctrl.begin(_boss, bd, boss_hp, src_area.boss_pattern_weights, f)
@@ -295,7 +323,7 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _on_tap() -> void:
-	if run_over or get_tree().paused or stun_left > 0.0:
+	if not _started or run_over or get_tree().paused or stun_left > 0.0:
 		return
 	# 斬りモーションは入力と同じフレームで開始する
 	heroine.slash()
@@ -449,10 +477,8 @@ func _end_run() -> void:
 			d.cleared_areas.append(area_index)
 		if area_index < GameState.area_count() and area_index >= SaveService.unlocked_area():
 			d.unlocked_area = area_index + 1
-			GameState.pending_story = area_index + 1
 		if area_index == GameState.area_count() and not bool(d.endless_unlocked):
 			d.endless_unlocked = true
-			GameState.pending_story = GameState.area_count() + 1
 	var judged := perfect_count + good_count + damage_count
 	var rate := float(perfect_count) / float(judged) if judged > 0 else 0.0
 	var news := {}
@@ -499,21 +525,26 @@ func _update_hud() -> void:
 	for c: Node in hearts.get_children():
 		c.queue_free()
 	for i in max_hp:
-		var t := TextureRect.new()
-		t.texture = HEART_TEX if i < hp else HEART_EMPTY_TEX
-		t.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		hearts.add_child(t)
+		hearts.add_child(_hud_icon(HEART_TEX if i < hp else HEART_EMPTY_TEX))
 	for i in guards:
-		var g := TextureRect.new()
-		g.texture = GUARD_TEX
-		g.mouse_filter = Control.MOUSE_FILTER_IGNORE
-		hearts.add_child(g)
+		hearts.add_child(_hud_icon(GUARD_TEX))
 	var floors := cfg.floors_per_area
 	if endless:
 		floor_label.text = Text.FLOOR_ENDLESS % (floor_reached + 1)
 	else:
 		floor_label.text = Text.FLOOR % [clampi(floor_reached + 1, 1, floors), floors]
 	coin_label.text = str(floori(coins_raw * coin_mul_total))
+
+
+## 12px のアイコンを 2 倍で表示する
+func _hud_icon(tex: Texture2D) -> TextureRect:
+	var t := TextureRect.new()
+	t.texture = tex
+	t.custom_minimum_size = tex.get_size() * 2.0
+	t.expand_mode = TextureRect.EXPAND_IGNORE_SIZE
+	t.stretch_mode = TextureRect.STRETCH_SCALE
+	t.mouse_filter = Control.MOUSE_FILTER_IGNORE
+	return t
 
 
 func _show_judge(text: String, color: Color) -> void:
@@ -601,7 +632,7 @@ func _play_slash_fx() -> void:
 	if not GameState.juice_on():
 		return
 	slash_fx.show()
-	slash_fx.scale.x = juice.slash_fx_width / SLASH_FX_BASE_WIDTH
+	slash_fx.scale = Vector2(juice.slash_fx_width / SLASH_FX_BASE_WIDTH, juice.slash_fx_thickness)
 	slash_fx.speed_scale = juice.slash_fx_fps / maxf(1.0, slash_fx.sprite_frames.get_animation_speed(&"slash"))
 	slash_fx.stop()
 	slash_fx.play(&"slash")
@@ -612,6 +643,7 @@ func _spawn_debris(pos: Vector2, size_mul: float) -> void:
 		return
 	var p := CPUParticles2D.new()
 	p.position = pos
+	p.scale = Vector2.ONE * cfg.enemy_scale
 	p.one_shot = true
 	p.amount = maxi(1, int(juice.debris_amount * size_mul))
 	p.lifetime = juice.debris_lifetime
@@ -637,10 +669,13 @@ func _spawn_coin_fly(from: Vector2, n: int) -> void:
 	if not GameState.juice_on():
 		return
 	var to := coin_icon.global_position + coin_icon.size / 2.0
+	# ワールド座標 → 画面（HUD）座標
+	var screen_from := get_viewport().get_canvas_transform() * from
 	for i in n:
 		var s := Sprite2D.new()
 		s.texture = COIN_TEX
-		s.position = from + Vector2(rng.randf_range(-8, 8), rng.randf_range(-8, 8))
+		s.scale = Vector2(2, 2)
+		s.position = screen_from + Vector2(rng.randf_range(-12, 12), rng.randf_range(-12, 12))
 		hud.add_child(s)
 		var tw := s.create_tween()
 		tw.tween_interval(0.04 * i)

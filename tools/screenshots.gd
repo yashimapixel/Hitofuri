@@ -46,9 +46,6 @@ func _run() -> void:
 	await _shot("01_title")
 	tree.change_scene_to_file("res://scenes/home.tscn")
 	await _wait(30)
-	await _shot("02_home_story")
-	_close_modals()
-	await _wait(30)
 	await _shot("03_home_login")
 	_close_modals()
 	await _wait(20)
@@ -82,6 +79,9 @@ func _run() -> void:
 	GameState.debug_show_judge = true
 	GameState.selected_area = 1
 	tree.change_scene_to_file("res://scenes/game.tscn")
+	await _wait(30)
+	await _shot("3_game_intro")
+	_close_modals()
 	await _wait(200)
 	await _shot("3_game_area1")
 	var g := tree.current_scene
@@ -91,6 +91,7 @@ func _run() -> void:
 	await _shot("3_game_tap")
 	# ボス戦
 	GameState.selected_area = 5
+	save.data.story_seen = [5]
 	tree.change_scene_to_file("res://scenes/game.tscn")
 	await _wait(5)
 	g = tree.current_scene

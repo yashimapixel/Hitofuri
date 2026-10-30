@@ -5,6 +5,8 @@ extends Node2D
 
 var judge: JudgeSystem
 var line_y: float = 470.0
+## 描く横の範囲（ワールド x の最小, 最大）
+var x_range := Vector2(0, 360)
 var speed: float = 220.0:
 	set(v):
 		speed = v
@@ -16,5 +18,5 @@ func _draw() -> void:
 		return
 	var good_px := judge.good_sec * speed
 	var perfect_px := judge.perfect_sec * speed
-	draw_rect(Rect2(0, line_y - good_px, 360, good_px * 2.0), Color(0.3, 0.6, 1.0, 0.18))
-	draw_rect(Rect2(0, line_y - perfect_px, 360, perfect_px * 2.0), Color(1.0, 0.8, 0.2, 0.28))
+	draw_rect(Rect2(x_range.x, line_y - good_px, x_range.y - x_range.x, good_px * 2.0), Color(0.3, 0.6, 1.0, 0.18))
+	draw_rect(Rect2(x_range.x, line_y - perfect_px, x_range.y - x_range.x, perfect_px * 2.0), Color(1.0, 0.8, 0.2, 0.28))

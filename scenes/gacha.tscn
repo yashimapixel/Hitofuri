@@ -25,61 +25,93 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 texture = ExtResource("2_bg")
+expand_mode = 1
+stretch_mode = 6
 
-[node name="TopBar" parent="." instance=ExtResource("3_top")]
+[node name="Frame" type="Control" parent="."]
+layout_mode = 1
+anchors_preset = 13
+anchor_left = 0.5
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -180.0
+offset_right = 180.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
 
-[node name="Title" type="Label" parent="."]
+[node name="TopBar" parent="Frame" instance=ExtResource("3_top")]
+layout_mode = 1
+anchor_right = 1.0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = -4.0
+offset_bottom = 42.0
+
+[node name="Title" type="Label" parent="Frame"]
 unique_name_in_owner = true
-layout_mode = 0
-offset_top = 40.0
-offset_right = 360.0
-offset_bottom = 70.0
+layout_mode = 1
+anchor_right = 1.0
+offset_left = 0.0
+offset_top = 46.0
+offset_right = 0.0
+offset_bottom = 86.0
 theme_type_variation = &"TitleLabel"
 text = "ガチャ"
 horizontal_alignment = 1
 vertical_alignment = 1
 
-[node name="Stage" type="Node2D" parent="."]
+[node name="Stage" type="Node2D" parent="Frame"]
 position = Vector2(180, 180)
 
-[node name="Light" type="Sprite2D" parent="Stage"]
+[node name="Light" type="Sprite2D" parent="Frame/Stage"]
 unique_name_in_owner = true
 texture = ExtResource("5_light")
 
-[node name="Chest" type="AnimatedSprite2D" parent="Stage"]
+[node name="Chest" type="AnimatedSprite2D" parent="Frame/Stage"]
 unique_name_in_owner = true
 scale = Vector2(3, 3)
 sprite_frames = ExtResource("4_chest")
 animation = &"closed"
 
-[node name="Buttons" type="VBoxContainer" parent="."]
+[node name="Buttons" type="VBoxContainer" parent="Frame"]
 unique_name_in_owner = true
-layout_mode = 0
-offset_left = 40.0
-offset_top = 290.0
-offset_right = 320.0
-offset_bottom = 500.0
+layout_mode = 1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 30.0
+offset_top = 272.0
+offset_right = -30.0
+offset_bottom = -132.0
 theme_override_constants/separation = 6
 
-[node name="Rates" type="Label" parent="."]
+[node name="Rates" type="Label" parent="Frame"]
 unique_name_in_owner = true
-layout_mode = 0
-offset_left = 12.0
-offset_top = 530.0
-offset_right = 348.0
-offset_bottom = 590.0
+layout_mode = 1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = -124.0
+offset_right = -8.0
+offset_bottom = -60.0
+grow_vertical = 0
 theme_type_variation = &"SmallLabel"
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[node name="BackButton" type="Button" parent="."]
+[node name="BackButton" type="Button" parent="Frame"]
 unique_name_in_owner = true
-layout_mode = 0
+layout_mode = 1
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
 offset_left = 12.0
-offset_top = 596.0
-offset_right = 348.0
-offset_bottom = 630.0
+offset_top = -52.0
+offset_right = -12.0
+offset_bottom = -8.0
+grow_vertical = 0
 focus_mode = 0
 text = "もどる"
 
@@ -93,9 +125,11 @@ grow_horizontal = 2
 grow_vertical = 2
 
 [node name="Hint" type="Label" parent="TapCatcher"]
-layout_mode = 0
+layout_mode = 1
+anchor_right = 1.0
+offset_left = 0.0
 offset_top = 300.0
-offset_right = 360.0
+offset_right = 0.0
 offset_bottom = 320.0
 theme_type_variation = &"SmallLabel"
 text = "タップでスキップ"

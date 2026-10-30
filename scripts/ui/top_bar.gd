@@ -1,6 +1,9 @@
 class_name TopBar
 extends PanelContainer
-## 画面上部の所持コイン・ガチャチケット表示。
+## 画面上部のヘッダー: 所持コイン・ガチャチケット（コインの右）と、設定ボタン（右上）。
+
+## true なら右上に設定ボタンを出す（Home）
+@export var show_settings: bool = false
 
 @onready var coin_label: Label = %CoinLabel
 @onready var ticket_label: Label = %TicketLabel
@@ -8,9 +11,14 @@ extends PanelContainer
 @onready var r2_label: Label = %R2Label
 @onready var r3_box: Control = %R3Box
 @onready var r3_label: Label = %R3Label
+@onready var settings_button: Button = %SettingsButton
 
 
 func _ready() -> void:
+	settings_button.visible = show_settings
+	settings_button.pressed.connect(func() -> void:
+		AudioService.play_se("button")
+		UiUtil.go(get_tree(), "settings"))
 	SaveService.changed.connect(refresh)
 	refresh()
 

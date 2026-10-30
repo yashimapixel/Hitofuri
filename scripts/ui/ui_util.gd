@@ -45,12 +45,13 @@ static func toast(parent: Node, text: String, sec: float = 2.0) -> void:
 	parent.add_child(layer)
 	var panel := PanelContainer.new()
 	panel.mouse_filter = Control.MOUSE_FILTER_IGNORE
-	var l := label(text, &"SmallLabel", HORIZONTAL_ALIGNMENT_CENTER)
+	var l := label(text, &"", HORIZONTAL_ALIGNMENT_CENTER)
 	l.autowrap_mode = TextServer.AUTOWRAP_ARBITRARY
-	l.custom_minimum_size = Vector2(280, 0)
+	l.custom_minimum_size = Vector2(300, 0)
 	panel.add_child(l)
 	layer.add_child(panel)
-	panel.position = Vector2(30, 560)
+	# 画面下部の中央（画面サイズに追従）
+	panel.set_anchors_and_offsets_preset(Control.PRESET_CENTER_BOTTOM, Control.PRESET_MODE_MINSIZE, 110)
 	panel.modulate.a = 0.0
 	var tw := panel.create_tween()
 	tw.tween_property(panel, "modulate:a", 1.0, 0.15)

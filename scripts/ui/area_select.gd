@@ -12,7 +12,7 @@ func _ready() -> void:
 		list.add_child(_area_button(a))
 	if bool(SaveService.data.endless_unlocked):
 		var b := UiUtil.button("%s\n%s" % [Text.ENDLESS, Text.BEST_FLOOR % SaveService.best_floor(GameState.ENDLESS)], _start.bind(GameState.ENDLESS))
-		b.custom_minimum_size = Vector2(0, 52)
+		b.custom_minimum_size = Vector2(0, 64)
 		list.add_child(b)
 
 
@@ -25,7 +25,7 @@ func _area_button(a: AreaData) -> Button:
 			status += "  " + Text.CLEARED
 	var b := UiUtil.button("%d. %s\n%s" % [a.index, a.display_name, status], _start.bind(a.index))
 	b.disabled = not unlocked
-	b.custom_minimum_size = Vector2(0, 52)
+	b.custom_minimum_size = Vector2(0, 64)
 	return b
 
 

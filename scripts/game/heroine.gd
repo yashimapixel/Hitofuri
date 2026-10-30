@@ -2,8 +2,6 @@ class_name Heroine
 extends Node2D
 ## ヒロイン。アニメ名: idle / slash / hurt / down
 
-const PALETTE_SHADER := preload("res://assets/shaders/palette_swap.gdshader")
-
 ## 斬りモーションの再生速度（fps）。0 なら SpriteFrames の設定をそのまま使う
 var slash_fps: float = 0.0
 
@@ -20,15 +18,7 @@ func _ready() -> void:
 
 func apply_costume(c: CostumeData) -> void:
 	sprite.sprite_frames = c.sprite_frames
-	if c.use_palette:
-		var m := ShaderMaterial.new()
-		m.shader = PALETTE_SHADER
-		m.set_shader_parameter("primary_color", c.primary_color)
-		m.set_shader_parameter("secondary_color", c.secondary_color)
-		m.set_shader_parameter("hair_color", c.hair_color)
-		sprite.material = m
-	else:
-		sprite.material = null
+	sprite.material = c.make_material()
 	sprite.play(&"idle")
 
 

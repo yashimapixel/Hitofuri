@@ -16,6 +16,20 @@ const BACK := "もどる"
 const CLOSE := "とじる"
 const OK := "OK"
 
+# Home の吹き出し（ランダムに表示。立ち絵をタップでも切り替わる）
+const HOME_LINES: PackedStringArray = [
+	"今日もひとふり、いってきます！",
+	"魔王城まで、あとどのくらい？",
+	"タイミングが命。よく見て斬る！",
+	"コインが貯まったら強化しよう！",
+	"新しい剣、出ないかなあ……",
+	"見えないゴーストにも\n気をつけて。",
+	"鎧騎士は二回斬らないと\n倒れないよ。",
+	"PERFECTを続けると\nコインが増えるの。",
+	"ちょっと休憩……\nううん、まだいける！",
+	"ミッションのごほうび、\n忘れずにね。",
+]
+
 # エリア選択
 const AREA_SELECT := "エリア選択"
 const ENDLESS := "エンドレス"
@@ -47,6 +61,7 @@ const RESULT_COINS := "獲得コイン"
 const RESULT_FIRST_CLEAR := "初クリアボーナス"
 const NEW_RECORD := "NEW!"
 const AD_DOUBLE := "広告を見て2倍"
+const AD_DOUBLE_NOTE := "%d → %d コイン"
 const TAKE_AS_IS := "そのまま受け取る"
 const AD_FAILED := "広告を再生できませんでした（等倍で受け取りました）"
 const AD_SKIPPED := "広告がスキップされました（等倍で受け取りました）"

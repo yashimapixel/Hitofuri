@@ -19,8 +19,6 @@ var costumes: Array[CostumeData] = []
 var selected_area: int = 1
 ## 直前のランの結果（Result 画面が読む）
 var last_result: Dictionary = {}
-## Home で表示待ちのストーリー（エリア番号。0 = なし）
-var pending_story: int = 0
 
 # デバッグ（OS.is_debug_build() のときだけ設定画面から変更できる）
 var debug_show_judge: bool = false

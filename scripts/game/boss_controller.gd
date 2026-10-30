@@ -70,7 +70,7 @@ func _process(delta: float) -> void:
 		State.FIRING:
 			_fire_t += delta
 			while _shot_index < _shots.size() and _fire_t >= _shots[_shot_index]:
-				fire_requested.emit(view.position + Vector2(0, 24), bullet_speed_mul())
+				fire_requested.emit(view.position + Vector2(0, 24 * view.scale.y), bullet_speed_mul())
 				_shot_index += 1
 			if _shot_index >= _shots.size():
 				state = State.REST

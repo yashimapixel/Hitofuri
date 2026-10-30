@@ -28,6 +28,8 @@ func _init() -> void:
 	for d in ["assets/sprites/enemies", "assets/sprites/bosses", "assets/sprites/swords", "assets/sprites/fx", "assets/ui", "assets/bg", "assets/sfx", "assets/bgm"]:
 		DirAccess.make_dir_recursive_absolute("res://" + d)
 	_gen_heroine()
+	_gen_portrait()
+	_gen_icons()
 	_gen_enemies()
 	_gen_bosses()
 	_gen_fx()
@@ -241,6 +243,116 @@ func _gen_heroine() -> void:
 		{"name": "hurt", "row": 2, "count": 2, "fps": 8, "loop": false},
 		{"name": "down", "row": 3, "count": 4, "fps": 6, "loop": false},
 	])
+
+
+# ---------------------------------------------------------------- ホームの立ち絵 64×112（3倍表示）
+
+func _gen_portrait() -> void:
+	var img := _new(64, 112)
+	# 後ろ髪
+	_ellipse(img, 32, 26, 17, 18, KEY_HAIR)
+	_rect(img, 15, 26, 7, 36, KEY_HAIR)
+	_rect(img, 42, 26, 7, 36, KEY_HAIR)
+	_tri(img, Vector2(15, 60), Vector2(22, 60), Vector2(17, 68), KEY_HAIR)
+	_tri(img, Vector2(42, 60), Vector2(49, 60), Vector2(47, 68), KEY_HAIR)
+	# 腕
+	_rect(img, 16, 46, 5, 20, SKIN)
+	_rect(img, 43, 46, 5, 20, SKIN)
+	# 脚とブーツ
+	_rect(img, 26, 88, 4, 12, SKIN)
+	_rect(img, 34, 88, 4, 12, SKIN)
+	_rect(img, 25, 98, 6, 12, BOOTS)
+	_rect(img, 33, 98, 6, 12, BOOTS)
+	# スカート
+	_tri(img, Vector2(32, 60), Vector2(13, 92), Vector2(51, 92), KEY_SECONDARY)
+	_rect(img, 20, 64, 24, 10, KEY_SECONDARY)
+	# 胴
+	_rect(img, 21, 43, 22, 23, KEY_PRIMARY)
+	_rect(img, 18, 43, 5, 6, KEY_PRIMARY)
+	_rect(img, 41, 43, 5, 6, KEY_PRIMARY)
+	_rect(img, 28, 43, 8, 3, GOLD)
+	_rect(img, 21, 63, 22, 3, GOLD)
+	_rect(img, 31, 63, 2, 3, Color(0.6, 0.4, 0.1))
+	# 首と顔
+	_rect(img, 29, 38, 6, 6, SKIN)
+	_ellipse(img, 32, 28, 12, 13, SKIN)
+	# 前髪
+	_rect(img, 20, 13, 24, 9, KEY_HAIR)
+	for i in 6:
+		_tri(img, Vector2(20 + i * 4, 21), Vector2(24 + i * 4, 21), Vector2(22 + i * 4, 25 + (i % 2) * 2), KEY_HAIR)
+	_rect(img, 19, 18, 3, 18, KEY_HAIR)
+	_rect(img, 42, 18, 3, 18, KEY_HAIR)
+	_rect(img, 20, 15, 24, 1, GOLD)
+	# 目・口・頬
+	var eye := Color(0.15, 0.1, 0.25)
+	_rect(img, 25, 27, 3, 5, eye)
+	_rect(img, 36, 27, 3, 5, eye)
+	_px(img, 25, 27, Color.WHITE)
+	_px(img, 36, 27, Color.WHITE)
+	_rect(img, 23, 33, 3, 1, Color(1.0, 0.6, 0.6))
+	_rect(img, 38, 33, 3, 1, Color(1.0, 0.6, 0.6))
+	_rect(img, 31, 35, 3, 1, Color(0.7, 0.35, 0.3))
+	# 剣（右手で地面に向けて持つ）
+	_rect(img, 48, 52, 3, 7, BOOTS)
+	_rect(img, 44, 58, 11, 3, GOLD)
+	_line(img, Vector2(49.5, 61), Vector2(49.5, 108), STEEL, 3)
+	_line(img, Vector2(49, 62), Vector2(49, 106), Color(1, 1, 1), 1)
+	_outline(img, OUTLINE)
+	_save_png(img, SPR + "heroine_portrait.png")
+
+
+# ---------------------------------------------------------------- アイコン（16px で描いて 2 倍）
+
+func _icon_save(img: Image, name: String) -> void:
+	_outline(img, OUTLINE)
+	img.resize(img.get_width() * 2, img.get_height() * 2, Image.INTERPOLATE_NEAREST)
+	_save_png(img, UI + name)
+
+
+func _gen_icons() -> void:
+	var gear := _new(16, 16)
+	_circle(gear, 8, 8, 5.5, Color(0.8, 0.82, 0.88))
+	for a in 8:
+		var v := Vector2.from_angle(a * TAU / 8.0) * 6.5 + Vector2(8, 8)
+		_rect(gear, roundi(v.x) - 1, roundi(v.y) - 1, 2, 2, Color(0.8, 0.82, 0.88))
+	_circle(gear, 8, 8, 2, Color(0, 0, 0, 0))
+	_icon_save(gear, "icon_settings.png")
+
+	var scroll := _new(16, 16)
+	_rect(scroll, 3, 3, 10, 11, Color(0.95, 0.88, 0.7))
+	_rect(scroll, 2, 2, 12, 2, Color(0.75, 0.55, 0.3))
+	_rect(scroll, 2, 13, 12, 2, Color(0.75, 0.55, 0.3))
+	for y: int in [6, 8, 10]:
+		_rect(scroll, 5, y, 6, 1, Color(0.5, 0.4, 0.3))
+	_rect(scroll, 10, 9, 3, 3, Color(0.85, 0.2, 0.2))
+	_icon_save(scroll, "icon_mission.png")
+
+	var up := _new(16, 16)
+	_tri(up, Vector2(8, 1), Vector2(1, 9), Vector2(15, 9), Color(0.4, 0.9, 0.4))
+	_rect(up, 5, 9, 6, 6, Color(0.4, 0.9, 0.4))
+	_rect(up, 7, 4, 2, 9, Color(0.75, 1, 0.75))
+	_icon_save(up, "icon_upgrade.png")
+
+	var chest := _new(16, 16)
+	_rect(chest, 2, 7, 12, 7, Color(0.6, 0.35, 0.15))
+	_rect(chest, 2, 3, 12, 4, Color(0.7, 0.42, 0.2))
+	_rect(chest, 2, 7, 12, 1, GOLD)
+	_rect(chest, 7, 6, 2, 3, GOLD)
+	_icon_save(chest, "icon_gacha.png")
+
+	var equip := _new(16, 16)
+	_rect(equip, 4, 3, 8, 10, Color(0.35, 0.5, 0.85))
+	_rect(equip, 1, 3, 4, 5, Color(0.35, 0.5, 0.85))
+	_rect(equip, 11, 3, 4, 5, Color(0.35, 0.5, 0.85))
+	_rect(equip, 6, 3, 4, 2, SKIN)
+	_rect(equip, 4, 10, 8, 1, GOLD)
+	_icon_save(equip, "icon_equip.png")
+
+	# 吹き出しのしっぽ（下向き）
+	var tail := _new(12, 10)
+	_tri(tail, Vector2(0, 0), Vector2(12, 0), Vector2(3, 9.5), OUTLINE)
+	_tri(tail, Vector2(2, 0), Vector2(10, 0), Vector2(4, 6.5), Color.WHITE)
+	_save_png(tail, UI + "bubble_tail.png")
 
 
 # ---------------------------------------------------------------- 敵 32×32

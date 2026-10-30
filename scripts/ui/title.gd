@@ -1,12 +1,14 @@
 extends Control
 ## タイトル画面。どこかをタップすると Home へ。
 
-@onready var heroine: Heroine = %Heroine
+@onready var portrait: TextureRect = %Portrait
 @onready var tap_label: Label = %TapLabel
 
 
 func _ready() -> void:
-	heroine.apply_costume(GameState.equipped_costume())
+	var costume := GameState.equipped_costume()
+	portrait.texture = costume.get_portrait()
+	portrait.material = costume.make_material()
 	var tw := create_tween().set_loops()
 	tw.tween_property(tap_label, "modulate:a", 0.2, 0.6)
 	tw.tween_property(tap_label, "modulate:a", 1.0, 0.6)

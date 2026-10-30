@@ -26,12 +26,13 @@ func show_rewarded(_placement: String) -> void:
 	bg.set_anchors_preset(Control.PRESET_FULL_RECT)
 	bg.mouse_filter = Control.MOUSE_FILTER_STOP
 	_layer.add_child(bg)
+	var center := CenterContainer.new()
+	center.set_anchors_preset(Control.PRESET_FULL_RECT)
+	_layer.add_child(center)
 	var box := VBoxContainer.new()
-	box.set_anchors_preset(Control.PRESET_CENTER)
 	box.alignment = BoxContainer.ALIGNMENT_CENTER
-	box.position = Vector2(80, 280)
-	box.size = Vector2(200, 80)
-	_layer.add_child(box)
+	box.add_theme_constant_override("separation", 12)
+	center.add_child(box)
 	var title := Label.new()
 	title.text = Text.AD_MOCK
 	title.theme_type_variation = &"TitleLabel"

@@ -31,7 +31,7 @@ func _build(title: String, width: float) -> void:
 	center.mouse_filter = Control.MOUSE_FILTER_IGNORE
 	add_child(center)
 	panel = PanelContainer.new()
-	panel.custom_minimum_size = Vector2(width, 0)
+	panel.custom_minimum_size = Vector2(minf(width, 348.0), 0)
 	center.add_child(panel)
 	content = VBoxContainer.new()
 	content.add_theme_constant_override("separation", 8)

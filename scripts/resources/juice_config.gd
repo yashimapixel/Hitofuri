@@ -20,7 +20,8 @@ extends Resource
 
 @export_group("斬撃エフェクト")
 @export var slash_fx_fps: float = 30.0
-@export var slash_fx_width: float = 200.0
+@export var slash_fx_width: float = 260.0
+@export var slash_fx_thickness: float = 2.0
 
 @export_group("判定文字")
 @export var judge_pop_scale: float = 1.4

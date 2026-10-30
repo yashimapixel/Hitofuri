@@ -75,6 +75,25 @@ func _run() -> void:
 	_check(not daily.has_pending_login_bonus(), "login bonus claimed on Home")
 	daily.debug_advance_day()
 	_check(daily.has_pending_login_bonus(), "next day login pending")
+	daily.claim_login_bonus()
+
+	print("[stage intro]")
+	save.data.story_seen = []
+	_gs().selected_area = 1
+	get_tree().change_scene_to_file("res://scenes/game.tscn")
+	await _wait(10)
+	var modal := _find_modal(get_tree().current_scene)
+	_check(modal != null, "intro shown on first entry")
+	_check(not bool(get_tree().current_scene.get("_started")), "spawning waits for intro")
+	if modal != null:
+		modal.close()
+	await _wait(5)
+	_check(bool(get_tree().current_scene.get("_started")), "game starts after intro closes")
+	get_tree().change_scene_to_file("res://scenes/game.tscn")
+	await _wait(10)
+	_check(_find_modal(get_tree().current_scene) == null, "intro not shown on second entry")
+	# 以降のテストでは紹介を出さない
+	save.data.story_seen = [1, 2, 3, 4, 5, 6]
 
 	print("[game: perfect bot, area 1]")
 	save.data.equipped_sword = "sword_01"
@@ -116,6 +135,13 @@ func _run() -> void:
 	save.save_game()
 	print("\nSMOKE TEST: ", "PASS" if _failures.is_empty() else "FAIL %s" % str(_failures))
 	get_tree().quit(0 if _failures.is_empty() else 1)
+
+
+func _find_modal(n: Node) -> Modal:
+	for c: Node in n.get_children():
+		if c is Modal:
+			return c
+	return null
 
 
 ## ボットで遊ぶ。perfect=true なら判定ラインぴったりで斬る。Result に着いたら true

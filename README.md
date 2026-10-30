@@ -4,7 +4,13 @@
 
 - エンジン: **Godot 4.7.2 stable**（GDScript・静的型付け）
 - レンダラー: Compatibility（2D のみ）
-- 論理解像度: 360×640（stretch: viewport / keep / integer）
+- 論理解像度: 360×640（stretch: viewport / **expand** / integer）
+
+## 画面サイズへの対応
+
+- 9:16 より縦長の端末: 縦に広がる。ヘッダーは画面上端、フッターは画面下端に付く。ゲーム画面はプレイフィールド（360×640）の下端を画面下端に合わせ、余った分は上に広がる（敵はその上端から出てくる）。
+- 9:16 より横長の端末: レイアウトは幅 360 のまま中央に置き、左右の余白は背景で埋める。
+- 各画面は `Background`（全面）＋ `Frame`（幅 360・中央・全高）の構成。`Frame` の中で上端・下端にアンカーしている。
 
 ## 遊び方
 
@@ -73,7 +79,10 @@ tools/               仮素材・設定の生成ツール、自動テスト、�
 
 - 衣装: プロトタイプはパレット差し替え（`assets/shaders/palette_swap.gdshader`）。ヒロインの仮スプライトのキー色（赤=服、緑=スカート、青=髪）を `CostumeData` の3色に置き換える。個別のドット絵に差し替える場合は `CostumeData.sprite_frames` を差し替えて `use_palette = false` にする。
 - 背景: `assets/bg/area1〜5.png`（縦にループする 360×640）と `home.png`。`AreaData.background` で差し替え可。
-- UI: `assets/ui/theme.tres`（ウィンドウ枠・ボタンは StyleBoxTexture の9スライス）。
+- ホームの立ち絵: `assets/sprites/heroine_portrait.png`（64×112 を3倍表示）。衣装ごとに変える場合は `CostumeData.portrait` に設定する（パレット差し替えは立ち絵にも効く）。
+- 表示倍率: `GameConfig` の `heroine_scale` / `enemy_scale` / `boss_scale`（既定 2 倍）。素材を大きい解像度で描き直したら 1 にする。
+- 敵の出現 X 位置のばらつき: `GameConfig.spawn_x_jitter`（既定 ±64px）。
+- UI: `assets/ui/theme.tres`（ウィンドウ枠・ボタンは StyleBoxTexture の9スライス）。文字サイズは本文16px・見出し32px・小さい文字12px。
 - アイコン: `assets/ui/icon.png`（192px）、Android アダプティブ用 `icon_foreground.png` / `icon_background.png`（432px）。
 - ブートスプラッシュ: `assets/ui/boot_splash.png`（プロジェクト設定 `application/boot_splash/image`）。
 
@@ -105,6 +114,11 @@ var result: AdService.Result = await AdService.rewarded_finished  # REWARDED / S
 3. `scripts/ads/admob_backend.gd` の `PLUGIN_SINGLETON` と `TODO(M6)` の箇所を、プラグインの API に合わせて実装する。テスト用ユニットIDは定義済み。
 4. AndroidManifest に AdMob アプリIDを設定する（テストID: `ca-app-pub-3940256099942544~3347511713`）。
 
+## テキスト
+
+`config/text.gd` に集約。Home の吹き出しのセリフは `Text.HOME_LINES`（ランダム表示。7秒ごと、または立ち絵をタップで切り替わる）。
+ステージ紹介（一枚絵＋3行、`Text.STORY`）は、そのステージに初めて入ったときに一度だけ表示する。
+
 ## セーブ
 
 - `user://save.json`（JSON）。`save_version` を持ち、`SaveService._migrate()` で旧形式を変換する。
@@ -131,10 +145,11 @@ godot --headless -s res://tools/gen_placeholders.gd
 # 設定リソースの生成（同上）
 godot --headless --editor --quit   # 先にインポートしてクラスを登録する
 godot --headless -s res://tools/gen_config.gd
-# 自動テスト（全画面を開き、ボットでエリア1・4をクリア、放置でゲームオーバー、広告2倍などを確認）
+# 自動テスト（全画面を開き、ステージ紹介の初回表示、ボットでエリア1・4をクリア、放置でゲームオーバー、広告2倍などを確認）
 godot --headless --fixed-fps 60 res://tools/smoke_test.tscn
 # 各画面のスクリーンショット
 xvfb-run godot --rendering-driver opengl3 --resolution 360x640 res://tools/screenshots.tscn -- /tmp/shots
+# 縦長・横長の確認は --resolution 360x800 / 480x640 など
 ```
 
 ## ビルド
@@ -162,5 +177,6 @@ iOS ビルドには Mac と Xcode が必要。
 
 ## ライセンス
 
-- フォント: PixelMplus（PixelMplus10 / PixelMplus12、© M+ FONTS PROJECT / itouhiro）。M+ FONT LICENSE により、改変の有無・商用/非商用を問わず使用・複製・再配布が許可されている。全文は `assets/fonts/LICENSE_PixelMplus.txt`。
+- フォント: DotGothic16（© The DotGothic16 Project Authors / Fontworks）。SIL Open Font License 1.1。全文は `assets/fonts/LICENSE_DotGothic16.txt`。本文・見出しに使用。
+- フォント: PixelMplus（PixelMplus10 / PixelMplus12、© M+ FONTS PROJECT / itouhiro）。M+ FONT LICENSE により、改変の有無・商用/非商用を問わず使用・複製・再配布が許可されている。全文は `assets/fonts/LICENSE_PixelMplus.txt`。小さい文字に使用。
 - その他の仮素材（画像・音）は `tools/gen_placeholders.gd` による自動生成。

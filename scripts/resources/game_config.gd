@@ -6,7 +6,15 @@ extends Resource
 @export var judge_line_y: float = 470.0
 @export var heroine_position: Vector2 = Vector2(180, 530)
 @export var spawn_y: float = -32.0
-@export var boss_y: float = 120.0
+@export var boss_y: float = 150.0
+## 敵の出現 X 位置のばらつき（中心 ± この値 px）
+@export var spawn_x_jitter: float = 64.0
+
+@export_group("表示サイズ")
+## スプライトの表示倍率（素材を大きい解像度で描き直した場合は 1 にする）
+@export var heroine_scale: float = 2.0
+@export var enemy_scale: float = 2.0
+@export var boss_scale: float = 2.0
 
 @export_group("判定")
 ## PERFECT 幅（ms）。強化・剣で広がる

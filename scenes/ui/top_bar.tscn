@@ -5,12 +5,11 @@
 [ext_resource type="Texture2D" path="res://assets/ui/ticket.png" id="3_t"]
 [ext_resource type="Texture2D" path="res://assets/ui/ticket_r2.png" id="4_t2"]
 [ext_resource type="Texture2D" path="res://assets/ui/ticket_r3.png" id="5_t3"]
+[ext_resource type="Texture2D" path="res://assets/ui/icon_settings.png" id="6_set"]
 
 [node name="TopBar" type="PanelContainer"]
-offset_left = 4.0
-offset_top = 4.0
-offset_right = 356.0
-offset_bottom = 32.0
+offset_right = 352.0
+offset_bottom = 38.0
 mouse_filter = 2
 script = ExtResource("1_top")
 
@@ -20,20 +19,32 @@ mouse_filter = 2
 theme_override_constants/separation = 4
 
 [node name="CoinIcon" type="TextureRect" parent="HBox"]
+custom_minimum_size = Vector2(24, 24)
 layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
 texture = ExtResource("2_coin")
-stretch_mode = 5
+expand_mode = 1
+stretch_mode = 0
 
 [node name="CoinLabel" type="Label" parent="HBox"]
 unique_name_in_owner = true
 layout_mode = 2
-size_flags_horizontal = 3
 text = "0"
 
-[node name="TicketIcon" type="TextureRect" parent="HBox"]
+[node name="Gap1" type="Control" parent="HBox"]
+custom_minimum_size = Vector2(8, 0)
 layout_mode = 2
+mouse_filter = 2
+
+[node name="TicketIcon" type="TextureRect" parent="HBox"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
 texture = ExtResource("3_t")
-stretch_mode = 5
+expand_mode = 1
+stretch_mode = 0
 
 [node name="TicketLabel" type="Label" parent="HBox"]
 unique_name_in_owner = true
@@ -43,12 +54,22 @@ text = "0"
 [node name="R2Box" type="HBoxContainer" parent="HBox"]
 unique_name_in_owner = true
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 4
 
-[node name="Icon" type="TextureRect" parent="HBox/R2Box"]
+[node name="Gap" type="Control" parent="HBox/R2Box"]
+custom_minimum_size = Vector2(4, 0)
 layout_mode = 2
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="HBox/R2Box"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
 texture = ExtResource("4_t2")
-stretch_mode = 5
+expand_mode = 1
+stretch_mode = 0
 
 [node name="R2Label" type="Label" parent="HBox/R2Box"]
 unique_name_in_owner = true
@@ -58,14 +79,38 @@ text = "0"
 [node name="R3Box" type="HBoxContainer" parent="HBox"]
 unique_name_in_owner = true
 layout_mode = 2
+mouse_filter = 2
 theme_override_constants/separation = 4
 
-[node name="Icon" type="TextureRect" parent="HBox/R3Box"]
+[node name="Gap" type="Control" parent="HBox/R3Box"]
+custom_minimum_size = Vector2(4, 0)
 layout_mode = 2
+mouse_filter = 2
+
+[node name="Icon" type="TextureRect" parent="HBox/R3Box"]
+custom_minimum_size = Vector2(24, 24)
+layout_mode = 2
+size_flags_vertical = 4
+mouse_filter = 2
 texture = ExtResource("5_t3")
-stretch_mode = 5
+expand_mode = 1
+stretch_mode = 0
 
 [node name="R3Label" type="Label" parent="HBox/R3Box"]
 unique_name_in_owner = true
 layout_mode = 2
 text = "0"
+
+[node name="Spacer" type="Control" parent="HBox"]
+layout_mode = 2
+size_flags_horizontal = 3
+mouse_filter = 2
+
+[node name="SettingsButton" type="Button" parent="HBox"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(40, 30)
+layout_mode = 2
+focus_mode = 0
+icon = ExtResource("6_set")
+icon_alignment = 1
+expand_icon = true
