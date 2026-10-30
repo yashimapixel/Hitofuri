@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BossData" format=3]
+
+[ext_resource type="SpriteFrames" path="res://assets/sprites/bosses/boss_bullet_frames.tres" id="1_xg605"]
+[ext_resource type="Script" path="res://scripts/resources/boss_data.gd" id="2_4vlse"]
+[ext_resource type="SpriteFrames" path="res://assets/sprites/bosses/area4_boss_frames.tres" id="3_c4i5w"]
+
+[resource]
+script = ExtResource("2_4vlse")
+id = &"area4_boss"
+display_name = "氷竜"
+is_area_boss = true
+sprite_frames = ExtResource("3_c4i5w")
+bullet_frames = ExtResource("1_xg605")

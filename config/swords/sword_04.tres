@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SwordData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/swords/sword_04.png" id="1_nuj3f"]
+[ext_resource type="Script" path="res://scripts/resources/sword_data.gd" id="2_cama8"]
+
+[resource]
+script = ExtResource("2_cama8")
+id = &"sword_04"
+display_name = "樫の木剣"
+icon = ExtResource("1_nuj3f")
+effect_id = 3
+base_value = 0.1
+per_level = 0.03
+description = "空振り硬直 -{v}秒"

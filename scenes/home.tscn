@@ -1,0 +1,109 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/home.gd" id="1_s"]
+[ext_resource type="Texture2D" path="res://assets/bg/home.png" id="2_bg"]
+[ext_resource type="PackedScene" path="res://scenes/ui/top_bar.tscn" id="3_top"]
+[ext_resource type="PackedScene" path="res://scenes/parts/heroine.tscn" id="4_her"]
+[ext_resource type="Texture2D" path="res://assets/ui/badge.png" id="5_badge"]
+
+[node name="Home" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_s")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_bg")
+
+[node name="TopBar" parent="." instance=ExtResource("3_top")]
+
+[node name="Heroine" parent="." instance=ExtResource("4_her")]
+unique_name_in_owner = true
+position = Vector2(180, 330)
+scale = Vector2(3, 3)
+
+[node name="Menu" type="VBoxContainer" parent="."]
+layout_mode = 0
+offset_left = 30.0
+offset_top = 432.0
+offset_right = 330.0
+offset_bottom = 628.0
+theme_override_constants/separation = 8
+
+[node name="SortieButton" type="Button" parent="Menu"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 56)
+layout_mode = 2
+focus_mode = 0
+theme_type_variation = &"AccentButton"
+text = "出撃"
+
+[node name="Row1" type="HBoxContainer" parent="Menu"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="UpgradeButton" type="Button" parent="Menu/Row1"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "強化"
+
+[node name="GachaButton" type="Button" parent="Menu/Row1"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "ガチャ"
+
+[node name="EquipButton" type="Button" parent="Menu/Row1"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "装備"
+
+[node name="Row2" type="HBoxContainer" parent="Menu"]
+layout_mode = 2
+theme_override_constants/separation = 8
+
+[node name="MissionButton" type="Button" parent="Menu/Row2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "ミッション"
+
+[node name="MissionBadge" type="TextureRect" parent="Menu/Row2/MissionButton"]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 4.0
+offset_top = 4.0
+offset_right = 20.0
+offset_bottom = 20.0
+mouse_filter = 2
+texture = ExtResource("5_badge")
+expand_mode = 1
+stretch_mode = 5
+
+[node name="SettingsButton" type="Button" parent="Menu/Row2"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 40)
+layout_mode = 2
+size_flags_horizontal = 3
+focus_mode = 0
+text = "設定"

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="GameConfig" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/game_config.gd" id="1_l8lsh"]
+
+[resource]
+script = ExtResource("1_l8lsh")
+midboss_floors = PackedInt32Array(10, 20)
+boss_pattern_single = PackedFloat32Array(0)
+boss_pattern_double = PackedFloat32Array(0, 0.35)
+boss_pattern_triple = PackedFloat32Array(0, 0.3, 0.75)

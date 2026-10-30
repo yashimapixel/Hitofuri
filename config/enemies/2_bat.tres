@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/enemy_data.gd" id="1_bl1qs"]
+[ext_resource type="SpriteFrames" path="res://assets/sprites/enemies/bat_frames.tres" id="2_8yg20"]
+
+[resource]
+script = ExtResource("1_bl1qs")
+id = &"bat"
+display_name = "コウモリ"
+behavior = 1
+sprite_frames = ExtResource("2_8yg20")

@@ -1,0 +1,10 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/enemy_data.gd" id="1_d3tci"]
+[ext_resource type="SpriteFrames" path="res://assets/sprites/enemies/slime_frames.tres" id="2_yvw5f"]
+
+[resource]
+script = ExtResource("1_d3tci")
+id = &"slime"
+display_name = "スライム"
+sprite_frames = ExtResource("2_yvw5f")

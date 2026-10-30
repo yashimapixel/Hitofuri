@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CostumeData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/costume_data.gd" id="1_6gm17"]
+[ext_resource type="SpriteFrames" path="res://assets/sprites/heroine_frames.tres" id="2_p5cgv"]
+
+[resource]
+script = ExtResource("1_6gm17")
+id = &"costume_06"
+display_name = "巫女装束"
+rarity = 2
+sprite_frames = ExtResource("2_p5cgv")
+primary_color = Color(0.95, 0.95, 0.95, 1)
+secondary_color = Color(0.85, 0.15, 0.2, 1)
+hair_color = Color(0.1, 0.1, 0.15, 1)

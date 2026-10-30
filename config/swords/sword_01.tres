@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="SwordData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/swords/sword_01.png" id="1_shfol"]
+[ext_resource type="Script" path="res://scripts/resources/sword_data.gd" id="2_3juav"]
+
+[resource]
+script = ExtResource("2_3juav")
+id = &"sword_01"
+display_name = "見習いの剣"
+icon = ExtResource("1_shfol")
+description = "効果なし"

@@ -1,0 +1,63 @@
+; Engine configuration file.
+; It's best edited using the editor UI and not directly,
+; since the parameters that go here are not all obvious.
+;
+; Format:
+;   [section] ; section goes between []
+;   param=value ; assign values to parameters
+
+config_version=5
+
+[application]
+
+config/name="ひとふりの剣姫"
+config/version="0.1.0"
+run/main_scene="res://scenes/boot.tscn"
+config/features=PackedStringArray("4.7", "Mobile")
+boot_splash/bg_color=Color(0.0627451, 0.0588235, 0.105882, 1)
+boot_splash/image="res://assets/ui/boot_splash.png"
+boot_splash/fullsize=false
+boot_splash/use_filter=false
+config/icon="res://assets/ui/icon.png"
+
+[audio]
+
+buses/default_bus_layout="res://assets/default_bus_layout.tres"
+
+[autoload]
+
+GameState="*res://scripts/autoload/game_state.gd"
+SaveService="*res://scripts/autoload/save_service.gd"
+DailyService="*res://scripts/autoload/daily_service.gd"
+AudioService="*res://scripts/autoload/audio_service.gd"
+HapticsService="*res://scripts/autoload/haptics_service.gd"
+AdService="*res://scripts/autoload/ad_service.gd"
+
+[display]
+
+window/size/viewport_width=360
+window/size/viewport_height=640
+window/size/window_width_override=720
+window/size/window_height_override=1280
+window/stretch/mode="viewport"
+window/stretch/aspect="keep"
+window/stretch/scale_mode="integer"
+window/handheld/orientation=1
+
+[gui]
+
+theme/custom="res://assets/ui/theme.tres"
+
+[input_devices]
+
+pointing/emulate_touch_from_mouse=true
+
+[rendering]
+
+renderer/rendering_method="gl_compatibility"
+renderer/rendering_method.mobile="gl_compatibility"
+textures/canvas_textures/default_texture_filter=0
+2d/snap/snap_2d_transforms_to_pixel=true
+2d/snap/snap_2d_vertices_to_pixel=true
+environment/defaults/default_clear_color=Color(0.0627451, 0.0588235, 0.105882, 1)
+textures/vram_compression/import_etc2_astc=true

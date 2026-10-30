@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/enemy_data.gd" id="1_bspmf"]
+[ext_resource type="SpriteFrames" path="res://assets/sprites/enemies/ghost_frames.tres" id="2_mqaib"]
+
+[resource]
+script = ExtResource("1_bspmf")
+id = &"ghost"
+display_name = "ゴースト"
+behavior = 2
+sprite_frames = ExtResource("2_mqaib")

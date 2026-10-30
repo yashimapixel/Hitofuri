@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CostumeData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/costume_data.gd" id="1_tikad"]
+[ext_resource type="SpriteFrames" path="res://assets/sprites/heroine_frames.tres" id="2_cxojr"]
+
+[resource]
+script = ExtResource("1_tikad")
+id = &"costume_08"
+display_name = "星詠みのドレス"
+rarity = 3
+sprite_frames = ExtResource("2_cxojr")
+primary_color = Color(0.2, 0.15, 0.45, 1)
+secondary_color = Color(0.95, 0.8, 0.3, 1)
+hair_color = Color(0.6, 0.85, 1, 1)

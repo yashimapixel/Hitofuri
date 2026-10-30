@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="AreaData" format=3]
+
+[ext_resource type="Resource" path="res://config/bosses/area2_boss.tres" id="1_tx4yl"]
+[ext_resource type="Texture2D" path="res://assets/bg/area2.png" id="2_c0sf4"]
+[ext_resource type="Resource" path="res://config/bosses/area2_mid.tres" id="3_uvf6l"]
+[ext_resource type="Script" path="res://scripts/resources/area_data.gd" id="4_830y8"]
+
+[resource]
+script = ExtResource("4_830y8")
+index = 2
+display_name = "まどろみの森"
+speed_mul = 1.15
+coin_mul = 2.0
+enemy_ids = PackedStringArray("slime", "bat", "ghost")
+spawn_weights = PackedFloat32Array(4, 3, 3)
+boss_pattern_weights = PackedFloat32Array(4, 4, 2)
+midboss = ExtResource("3_uvf6l")
+area_boss = ExtResource("1_tx4yl")
+background = ExtResource("2_c0sf4")

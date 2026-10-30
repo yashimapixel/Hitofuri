@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="GachaConfig" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/gacha_config.gd" id="1_8ffit"]
+
+[resource]
+script = ExtResource("1_8ffit")
+rarity_weights = PackedFloat32Array(65, 28, 7)
+rarity_light_colors = PackedColorArray(1, 1, 1, 1, 0.35, 0.6, 1, 1, 1, 0.82, 0.25, 1)

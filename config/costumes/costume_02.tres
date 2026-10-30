@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="CostumeData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/costume_data.gd" id="1_7amm6"]
+[ext_resource type="SpriteFrames" path="res://assets/sprites/heroine_frames.tres" id="2_l76hy"]
+
+[resource]
+script = ExtResource("1_7amm6")
+id = &"costume_02"
+display_name = "見習い騎士"
+sprite_frames = ExtResource("2_l76hy")
+primary_color = Color(0.6, 0.62, 0.7, 1)
+secondary_color = Color(0.3, 0.35, 0.6, 1)
+hair_color = Color(0.95, 0.85, 0.4, 1)

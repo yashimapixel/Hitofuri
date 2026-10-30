@@ -1,0 +1,62 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/upgrade.gd" id="1_s"]
+[ext_resource type="Texture2D" path="res://assets/bg/home.png" id="2_bg"]
+[ext_resource type="PackedScene" path="res://scenes/ui/top_bar.tscn" id="3_top"]
+
+[node name="Upgrade" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_s")
+
+[node name="Background" type="TextureRect" parent="."]
+self_modulate = Color(0.5, 0.5, 0.62, 1)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_bg")
+
+[node name="TopBar" parent="." instance=ExtResource("3_top")]
+
+[node name="Title" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 40.0
+offset_right = 360.0
+offset_bottom = 70.0
+theme_type_variation = &"TitleLabel"
+text = "強化"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Scroll" type="ScrollContainer" parent="."]
+layout_mode = 0
+offset_left = 12.0
+offset_top = 80.0
+offset_right = 348.0
+offset_bottom = 588.0
+horizontal_scroll_mode = 0
+
+[node name="Content" type="VBoxContainer" parent="Scroll"]
+unique_name_in_owner = true
+layout_mode = 2
+size_flags_horizontal = 3
+theme_override_constants/separation = 6
+
+[node name="BackButton" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_left = 12.0
+offset_top = 596.0
+offset_right = 348.0
+offset_bottom = 630.0
+focus_mode = 0
+text = "もどる"

@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="SwordData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/swords/sword_12.png" id="1_x1anh"]
+[ext_resource type="Script" path="res://scripts/resources/sword_data.gd" id="2_gdka4"]
+
+[resource]
+script = ExtResource("2_gdka4")
+id = &"sword_12"
+display_name = "竜殺しの剣"
+rarity = 3
+icon = ExtResource("1_x1anh")
+effect_id = 11
+base_value = 20.0
+per_level = 5.0
+description = "PERFECT幅 +{v}ms
+被弾時コンボが半減で済む"

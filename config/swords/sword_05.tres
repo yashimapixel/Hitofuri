@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SwordData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/swords/sword_05.png" id="1_3eacp"]
+[ext_resource type="Script" path="res://scripts/resources/sword_data.gd" id="2_k33ns"]
+
+[resource]
+script = ExtResource("2_k33ns")
+id = &"sword_05"
+display_name = "銀の剣"
+rarity = 2
+icon = ExtResource("1_3eacp")
+effect_id = 4
+base_value = 0.4
+per_level = 0.1
+description = "ゴーストの透明度が {v} に"

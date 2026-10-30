@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BossData" format=3]
+
+[ext_resource type="SpriteFrames" path="res://assets/sprites/bosses/boss_bullet_frames.tres" id="1_v50c8"]
+[ext_resource type="Script" path="res://scripts/resources/boss_data.gd" id="2_gkhy4"]
+[ext_resource type="SpriteFrames" path="res://assets/sprites/bosses/area2_boss_frames.tres" id="3_okibe"]
+
+[resource]
+script = ExtResource("2_gkhy4")
+id = &"area2_boss"
+display_name = "森の魔女"
+is_area_boss = true
+sprite_frames = ExtResource("3_okibe")
+bullet_frames = ExtResource("1_v50c8")

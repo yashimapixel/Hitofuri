@@ -1,0 +1,10 @@
+# Godot 4
+.godot/
+/android/
+*.translation
+export_credentials.cfg
+# ビルド成果物
+/build/
+*.apk
+*.aab
+*.keystore

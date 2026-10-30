@@ -1,0 +1,11 @@
+[gd_resource type="Resource" script_class="CostumeData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/costume_data.gd" id="1_jtx6c"]
+[ext_resource type="SpriteFrames" path="res://assets/sprites/heroine_frames.tres" id="2_uqprl"]
+
+[resource]
+script = ExtResource("1_jtx6c")
+id = &"costume_00"
+display_name = "冒険者の服"
+in_gacha = false
+sprite_frames = ExtResource("2_uqprl")

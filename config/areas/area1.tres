@@ -1,0 +1,16 @@
+[gd_resource type="Resource" script_class="AreaData" format=3]
+
+[ext_resource type="Resource" path="res://config/bosses/area1_boss.tres" id="1_1tuq0"]
+[ext_resource type="Texture2D" path="res://assets/bg/area1.png" id="2_3uvan"]
+[ext_resource type="Resource" path="res://config/bosses/area1_mid.tres" id="3_oh1g1"]
+[ext_resource type="Script" path="res://scripts/resources/area_data.gd" id="4_v17oq"]
+
+[resource]
+script = ExtResource("4_v17oq")
+display_name = "はじまりの草原"
+enemy_ids = PackedStringArray("slime", "bat")
+spawn_weights = PackedFloat32Array(6, 4)
+boss_pattern_weights = PackedFloat32Array(6, 3, 1)
+midboss = ExtResource("3_oh1g1")
+area_boss = ExtResource("1_1tuq0")
+background = ExtResource("2_3uvan")

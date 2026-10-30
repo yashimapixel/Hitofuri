@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="CostumeData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/costume_data.gd" id="1_h7buc"]
+[ext_resource type="SpriteFrames" path="res://assets/sprites/heroine_frames.tres" id="2_fummi"]
+
+[resource]
+script = ExtResource("1_h7buc")
+id = &"costume_04"
+display_name = "魔法学院の制服"
+rarity = 2
+sprite_frames = ExtResource("2_fummi")
+primary_color = Color(0.2, 0.2, 0.35, 1)
+secondary_color = Color(0.7, 0.2, 0.3, 1)
+hair_color = Color(0.6, 0.4, 0.85, 1)

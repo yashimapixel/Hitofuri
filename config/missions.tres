@@ -1,0 +1,60 @@
+[gd_resource type="Resource" script_class="MissionTable" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/mission_data.gd" id="1_4a5vw"]
+[ext_resource type="Script" path="res://scripts/resources/mission_table.gd" id="2_8phfq"]
+
+[sub_resource type="Resource" id="Resource_5ooct"]
+script = ExtResource("1_4a5vw")
+id = &"sortie"
+text = "{n}回出撃する"
+target = 3
+
+[sub_resource type="Resource" id="Resource_7yr7d"]
+script = ExtResource("1_4a5vw")
+id = &"perfect"
+text = "PERFECTを合計{n}回出す"
+stat = 1
+target = 50
+
+[sub_resource type="Resource" id="Resource_upx2p"]
+script = ExtResource("1_4a5vw")
+id = &"combo"
+text = "1回のランで{n}コンボする"
+stat = 2
+target = 20
+is_max_value = true
+
+[sub_resource type="Resource" id="Resource_a6elc"]
+script = ExtResource("1_4a5vw")
+id = &"kill"
+text = "敵を合計{n}体倒す"
+stat = 3
+target = 100
+
+[sub_resource type="Resource" id="Resource_7shta"]
+script = ExtResource("1_4a5vw")
+id = &"boss"
+text = "ボスを{n}体倒す"
+stat = 4
+
+[sub_resource type="Resource" id="Resource_64pke"]
+script = ExtResource("1_4a5vw")
+id = &"ad"
+text = "広告を見て報酬を2倍にする"
+stat = 5
+
+[sub_resource type="Resource" id="Resource_chhuo"]
+script = ExtResource("1_4a5vw")
+id = &"upgrade"
+text = "強化を{n}回する"
+stat = 6
+
+[sub_resource type="Resource" id="Resource_gddbx"]
+script = ExtResource("1_4a5vw")
+id = &"gacha"
+text = "ガチャを{n}回引く"
+stat = 7
+
+[resource]
+script = ExtResource("2_8phfq")
+missions = Array[ExtResource("1_4a5vw")]([SubResource("Resource_5ooct"), SubResource("Resource_7yr7d"), SubResource("Resource_upx2p"), SubResource("Resource_a6elc"), SubResource("Resource_7shta"), SubResource("Resource_64pke"), SubResource("Resource_chhuo"), SubResource("Resource_gddbx")])

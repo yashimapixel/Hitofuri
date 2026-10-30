@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="AreaData" format=3]
+
+[ext_resource type="Resource" path="res://config/bosses/area3_boss.tres" id="1_ikfsx"]
+[ext_resource type="Texture2D" path="res://assets/bg/area3.png" id="2_vuc2o"]
+[ext_resource type="Resource" path="res://config/bosses/area3_mid.tres" id="3_mam46"]
+[ext_resource type="Script" path="res://scripts/resources/area_data.gd" id="4_l4hgn"]
+
+[resource]
+script = ExtResource("4_l4hgn")
+index = 3
+display_name = "水晶の洞窟"
+speed_mul = 1.3
+coin_mul = 3.0
+enemy_ids = PackedStringArray("slime", "bat", "ghost", "knight")
+spawn_weights = PackedFloat32Array(3, 3, 2, 3)
+boss_pattern_weights = PackedFloat32Array(3, 4, 3)
+midboss = ExtResource("3_mam46")
+area_boss = ExtResource("1_ikfsx")
+background = ExtResource("2_vuc2o")

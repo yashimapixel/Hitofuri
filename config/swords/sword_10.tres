@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SwordData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/swords/sword_10.png" id="1_17aub"]
+[ext_resource type="Script" path="res://scripts/resources/sword_data.gd" id="2_7ay71"]
+
+[resource]
+script = ExtResource("2_7ay71")
+id = &"sword_10"
+display_name = "聖騎士の剣"
+rarity = 3
+icon = ExtResource("1_17aub")
+effect_id = 9
+base_value = 1.0
+per_level = 0.5
+description = "ボスへの跳ね返しダメージ +{v}"

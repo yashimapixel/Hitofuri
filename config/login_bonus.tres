@@ -1,0 +1,8 @@
+[gd_resource type="Resource" script_class="LoginBonusTable" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/login_bonus_table.gd" id="1_451hd"]
+
+[resource]
+script = ExtResource("1_451hd")
+reward_types = Array[int]([0, 0, 0, 0, 0, 0, 2, 0, 0, 0, 0, 0, 0, 3])
+amounts = PackedInt32Array(100, 130, 160, 200, 240, 280, 1, 150, 200, 250, 300, 350, 400, 1)

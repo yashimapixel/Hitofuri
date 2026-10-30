@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="EnemyData" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/enemy_data.gd" id="1_8ss5g"]
+[ext_resource type="SpriteFrames" path="res://assets/sprites/enemies/bullet_frames.tres" id="2_lwi04"]
+
+[resource]
+script = ExtResource("1_8ss5g")
+id = &"bullet"
+display_name = "魔法弾"
+behavior = 5
+gives_coin = false
+counts_as_floor = false
+sprite_frames = ExtResource("2_lwi04")

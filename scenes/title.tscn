@@ -1,0 +1,48 @@
+[gd_scene format=3]
+
+[ext_resource type="Script" path="res://scripts/ui/title.gd" id="1_s"]
+[ext_resource type="Texture2D" path="res://assets/bg/home.png" id="2_bg"]
+[ext_resource type="PackedScene" path="res://scenes/parts/heroine.tscn" id="3_her"]
+
+[node name="Title" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_s")
+
+[node name="Background" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 2
+texture = ExtResource("2_bg")
+
+[node name="TitleLabel" type="Label" parent="."]
+layout_mode = 0
+offset_top = 110.0
+offset_right = 360.0
+offset_bottom = 160.0
+theme_type_variation = &"HugeLabel"
+text = "ひとふりの剣姫"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Heroine" parent="." instance=ExtResource("3_her")]
+unique_name_in_owner = true
+position = Vector2(180, 390)
+scale = Vector2(3, 3)
+
+[node name="TapLabel" type="Label" parent="."]
+unique_name_in_owner = true
+layout_mode = 0
+offset_top = 520.0
+offset_right = 360.0
+offset_bottom = 540.0
+text = "タップしてスタート"
+horizontal_alignment = 1

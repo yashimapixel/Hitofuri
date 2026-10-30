@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BossData" format=3]
+
+[ext_resource type="SpriteFrames" path="res://assets/sprites/bosses/boss_bullet_frames.tres" id="1_1ht6t"]
+[ext_resource type="Script" path="res://scripts/resources/boss_data.gd" id="2_n7i8g"]
+[ext_resource type="SpriteFrames" path="res://assets/sprites/bosses/area3_mid_frames.tres" id="3_4k82t"]
+
+[resource]
+script = ExtResource("2_n7i8g")
+id = &"area3_mid"
+display_name = "鉄壁の騎士"
+sprite_frames = ExtResource("3_4k82t")
+bullet_frames = ExtResource("1_1ht6t")

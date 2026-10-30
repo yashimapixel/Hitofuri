@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="SwordData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/swords/sword_08.png" id="1_2omdq"]
+[ext_resource type="Script" path="res://scripts/resources/sword_data.gd" id="2_je7my"]
+
+[resource]
+script = ExtResource("2_je7my")
+id = &"sword_08"
+display_name = "炎の剣"
+rarity = 2
+icon = ExtResource("1_2omdq")
+effect_id = 7
+base_value = 0.3
+per_level = 0.1
+description = "鎧騎士を {v}% の確率で1撃で倒す"

@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="AreaData" format=3]
+
+[ext_resource type="Resource" path="res://config/bosses/area5_boss.tres" id="1_sibqa"]
+[ext_resource type="Texture2D" path="res://assets/bg/area5.png" id="2_1arbv"]
+[ext_resource type="Resource" path="res://config/bosses/area5_mid.tres" id="3_rq3et"]
+[ext_resource type="Script" path="res://scripts/resources/area_data.gd" id="4_54p8r"]
+
+[resource]
+script = ExtResource("4_54p8r")
+index = 5
+display_name = "魔王城"
+speed_mul = 1.6
+coin_mul = 8.0
+enemy_ids = PackedStringArray("slime", "bat", "ghost", "knight", "mage")
+spawn_weights = PackedFloat32Array(2, 2, 2, 2, 2)
+boss_pattern_weights = PackedFloat32Array(1, 4, 5)
+midboss = ExtResource("3_rq3et")
+area_boss = ExtResource("1_sibqa")
+background = ExtResource("2_1arbv")

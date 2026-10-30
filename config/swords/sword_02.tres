@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SwordData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/swords/sword_02.png" id="1_27l6c"]
+[ext_resource type="Script" path="res://scripts/resources/sword_data.gd" id="2_vynn6"]
+
+[resource]
+script = ExtResource("2_vynn6")
+id = &"sword_02"
+display_name = "鉄の剣"
+icon = ExtResource("1_27l6c")
+effect_id = 1
+base_value = 5.0
+per_level = 2.0
+description = "獲得コイン +{v}%"

@@ -1,0 +1,12 @@
+[gd_resource type="Resource" script_class="BossData" format=3]
+
+[ext_resource type="SpriteFrames" path="res://assets/sprites/bosses/boss_bullet_frames.tres" id="1_onnj3"]
+[ext_resource type="Script" path="res://scripts/resources/boss_data.gd" id="2_aatoq"]
+[ext_resource type="SpriteFrames" path="res://assets/sprites/bosses/area4_mid_frames.tres" id="3_j451y"]
+
+[resource]
+script = ExtResource("2_aatoq")
+id = &"area4_mid"
+display_name = "雪原の魔導士"
+sprite_frames = ExtResource("3_j451y")
+bullet_frames = ExtResource("1_onnj3")

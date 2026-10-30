@@ -1,0 +1,19 @@
+[gd_resource type="Resource" script_class="AreaData" format=3]
+
+[ext_resource type="Resource" path="res://config/bosses/area4_boss.tres" id="1_jd8eg"]
+[ext_resource type="Texture2D" path="res://assets/bg/area4.png" id="2_ydeke"]
+[ext_resource type="Resource" path="res://config/bosses/area4_mid.tres" id="3_66o6y"]
+[ext_resource type="Script" path="res://scripts/resources/area_data.gd" id="4_r682c"]
+
+[resource]
+script = ExtResource("4_r682c")
+index = 4
+display_name = "氷雪の山脈"
+speed_mul = 1.45
+coin_mul = 5.0
+enemy_ids = PackedStringArray("slime", "bat", "ghost", "knight", "mage")
+spawn_weights = PackedFloat32Array(2, 3, 2, 2, 3)
+boss_pattern_weights = PackedFloat32Array(2, 4, 4)
+midboss = ExtResource("3_66o6y")
+area_boss = ExtResource("1_jd8eg")
+background = ExtResource("2_ydeke")

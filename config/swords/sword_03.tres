@@ -1,0 +1,14 @@
+[gd_resource type="Resource" script_class="SwordData" format=3]
+
+[ext_resource type="Texture2D" path="res://assets/sprites/swords/sword_03.png" id="1_d1lch"]
+[ext_resource type="Script" path="res://scripts/resources/sword_data.gd" id="2_mfl60"]
+
+[resource]
+script = ExtResource("2_mfl60")
+id = &"sword_03"
+display_name = "旅人の短剣"
+icon = ExtResource("1_d1lch")
+effect_id = 2
+base_value = 10.0
+per_level = 5.0
+description = "GOOD幅 +{v}ms"

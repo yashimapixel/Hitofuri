@@ -1,0 +1,42 @@
+[gd_resource type="Resource" script_class="UpgradeTable" format=3]
+
+[ext_resource type="Script" path="res://scripts/resources/upgrade_table.gd" id="1_rtjcd"]
+[ext_resource type="Script" path="res://scripts/resources/upgrade_data.gd" id="2_b4lk5"]
+
+[sub_resource type="Resource" id="Resource_t51bt"]
+script = ExtResource("2_b4lk5")
+id = &"hp"
+display_name = "最大HP"
+description = "最大HPが1増える"
+base_value = 3.0
+costs = PackedInt32Array(100, 300, 800, 2000, 5000)
+
+[sub_resource type="Resource" id="Resource_hmksd"]
+script = ExtResource("2_b4lk5")
+id = &"window"
+display_name = "見切り"
+description = "PERFECT幅が10ms広がる"
+per_level = 10.0
+value_format = "+%dms"
+costs = PackedInt32Array(80, 152, 289, 549, 1043)
+
+[sub_resource type="Resource" id="Resource_b84kr"]
+script = ExtResource("2_b4lk5")
+id = &"coin"
+display_name = "金運"
+description = "獲得コインが10%増える"
+per_level = 10.0
+value_format = "+%d%%"
+costs = PackedInt32Array(150, 240, 384, 614, 983, 1573, 2517, 4027, 6442, 10308)
+
+[sub_resource type="Resource" id="Resource_xoxqn"]
+script = ExtResource("2_b4lk5")
+id = &"guard"
+display_name = "加護"
+description = "ラン開始時に被弾を1回防ぐガードを得る"
+value_format = "%d個"
+costs = PackedInt32Array(500, 2000, 6000)
+
+[resource]
+script = ExtResource("1_rtjcd")
+upgrades = Array[ExtResource("2_b4lk5")]([SubResource("Resource_t51bt"), SubResource("Resource_hmksd"), SubResource("Resource_b84kr"), SubResource("Resource_xoxqn")])

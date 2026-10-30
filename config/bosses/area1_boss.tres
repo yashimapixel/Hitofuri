@@ -1,0 +1,13 @@
+[gd_resource type="Resource" script_class="BossData" format=3]
+
+[ext_resource type="SpriteFrames" path="res://assets/sprites/bosses/boss_bullet_frames.tres" id="1_kurvm"]
+[ext_resource type="Script" path="res://scripts/resources/boss_data.gd" id="2_m322l"]
+[ext_resource type="SpriteFrames" path="res://assets/sprites/bosses/area1_boss_frames.tres" id="3_1g77s"]
+
+[resource]
+script = ExtResource("2_m322l")
+id = &"area1_boss"
+display_name = "大スライム"
+is_area_boss = true
+sprite_frames = ExtResource("3_1g77s")
+bullet_frames = ExtResource("1_kurvm")
